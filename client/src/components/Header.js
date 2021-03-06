@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 
@@ -37,6 +38,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   poisition: relative;
+  box-shadow: 0 1px 0 0 rgb(255 255 255 / 10%);
 `;
 
 const Main = styled.div`
@@ -66,7 +68,7 @@ const Search = styled.div`
     padding-top: 4px;
     padding-bottom: 4px;
 
-    :focus {
+    &:focus {
       outline: none;
     }
   }
