@@ -7,7 +7,7 @@ import { sidebarItemsData } from '../data/SidebarData';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import AddIcon from '@material-ui/icons/Add';
 
-function Sidebar() {
+function Sidebar(props) {
   return (
     <div>
       <Container>
@@ -18,9 +18,9 @@ function Sidebar() {
           </NewMessage>
         </WorkspaceContainer>
         <MainChannels>
-          {sidebarItemsData.map((item) => {
+          {sidebarItemsData.map((item, i) => {
             return (
-              <MainChannelItem>
+              <MainChannelItem key={i}>
                 {item.icon}
                 {item.text}
               </MainChannelItem>
@@ -33,9 +33,9 @@ function Sidebar() {
             <AddIcon />
           </NewChannelContainer>
           <ChannelsList>
-            <Channel># Channel 1</Channel>
-            <Channel># Channel 2</Channel>
-            <Channel># Channel 3</Channel>
+            {props.channels.map((channel) => {
+              return <Channel key={channel.id}># {channel.name}</Channel>;
+            })}
           </ChannelsList>
         </ChannelsContainer>
       </Container>
