@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
+import firebase from 'firebase';
 
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import ChatInput from './ChatInput';
 import Message from './Message';
 import db from '../firebase';
 
-function Chat() {
+function Chat({ user }) {
   const { channelId } = useParams();
 
   const [channel, setChannel] = useState();
@@ -22,6 +23,22 @@ function Chat() {
         let messages = snapshot.docs.map((doc) => doc.data());
         setMessages(messages);
       });
+  };
+
+  const sendMessage = (text) => {
+    if (channelId) {
+      let payload = {
+        text: text,
+        user: user.name,
+        userImage: user.photoURL,
+        timestamp: firebase.firestore.Timestamp.now(),
+      };
+
+      db.collection('channels')
+        .doc(channelId)
+        .collection('messages')
+        .add(payload);
+    }
   };
 
   const getChannel = () => {
@@ -63,7 +80,7 @@ function Chat() {
             );
           })}
       </MessageContainer>
-      <ChatInput />
+      <ChatInput sendMessage={sendMessage} />
     </Container>
   );
 }
@@ -73,6 +90,7 @@ export default Chat;
 const Container = styled.div`
   display: grid;
   grid-template-rows: 64px auto min-content;
+  min-height: 0;
 `;
 
 const Header = styled.div`
@@ -108,4 +126,8 @@ const Info = styled(InfoOutlinedIcon)`
   cursor: pointer;
 `;
 
-const MessageContainer = styled.div``;
+const MessageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+`;
