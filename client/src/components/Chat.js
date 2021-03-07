@@ -59,7 +59,7 @@ function Chat({ user }) {
       <Header>
         <Channel>
           <ChannelName># {channel && channel.name}</ChannelName>
-          <ChannelInfo>This guild is lit</ChannelInfo>
+          <ChannelInfo>I'll make this work later maybe who knows</ChannelInfo>
         </Channel>
         <ChannelDetails>
           <div>Details</div>
