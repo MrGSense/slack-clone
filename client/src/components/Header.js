@@ -9,13 +9,13 @@ function Header() {
     <div>
       <Container>
         <Main>
-          <AccessTimeIcon />
+          <AccessTimeIcon cursor='pointer' />
           <SearchContainer>
             <Search>
               <input type='text' placeholder='Search...' />
             </Search>
           </SearchContainer>
-          <HelpOutlineIcon />
+          <HelpOutlineIcon cursor='pointer' />
         </Main>
         <UserContainer>
           <Name>KyleF</Name>
@@ -38,7 +38,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   poisition: relative;
-  box-shadow: 0 1px 0 0 rgb(255 255 255 / 10%);
+  box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.1);
 `;
 
 const Main = styled.div`
@@ -56,11 +56,12 @@ const SearchContainer = styled.div`
 
 const Search = styled.div`
   width: 100%;
-  box-shadow: inset 0 0 0 1px rgb(104 74 104);
+  box-shadow: inset 0 0 0 1px rgb(104, 74, 104);
   border-radius: 6px;
 
   input {
     background-color: transparent;
+    width: 95%;
     border: none;
     padding-left: 8px;
     padding-right: 8px;
