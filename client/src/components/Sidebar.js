@@ -6,8 +6,19 @@ import { sidebarItemsData } from '../data/SidebarData';
 
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import AddIcon from '@material-ui/icons/Add';
+import db from '../firebase';
 
 function Sidebar(props) {
+  const addChannel = () => {
+    const promptName = prompt('Enter channel name');
+
+    if (promptName) {
+      db.collection('channels').add({
+        name: promptName,
+      });
+    }
+  };
+
   return (
     <div>
       <Container>
@@ -30,7 +41,7 @@ function Sidebar(props) {
         <ChannelsContainer>
           <NewChannelContainer>
             <div>Channels</div>
-            <AddIcon />
+            <AddIcon cursor='pointer' onClick={addChannel} />
           </NewChannelContainer>
           <ChannelsList>
             {props.channels.map((channel) => {
