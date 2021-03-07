@@ -1,17 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
 
-function Message() {
+function Message({ text, user, userImage, timestamp }) {
   return (
     <Container>
       <UserAvatar>
-        <img src='https://i.imgur.com/6VBx3io.png' alt='User' />
+        <img
+          src={userImage ? userImage : 'https://i.imgur.com/6VBx3io.png'}
+          alt='User'
+        />
       </UserAvatar>
       <MessageContent>
         <Name>
-          KyleF<span>2/23/2021 11:13:55 AM</span>
+          {user}
+          <span>{timestamp.toDate().toUTCString()}</span>
         </Name>
-        <Text>Why am I coding this</Text>
+        <Text>{text}</Text>
       </MessageContent>
     </Container>
   );

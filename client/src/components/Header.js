@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 
-function Header() {
+function Header(props) {
   return (
     <div>
       <Container>
@@ -18,9 +18,16 @@ function Header() {
           <HelpOutlineIcon cursor='pointer' />
         </Main>
         <UserContainer>
-          <Name>KyleF</Name>
-          <UserImage>
-            <img src='https://i.imgur.com/6VBx3io.png' alt='User' />
+          <Name>{props.user.name}</Name>
+          <UserImage onClick={props.signOut}>
+            <img
+              src={
+                props.user.photoURL
+                  ? props.user.photoURL
+                  : 'https://i.imgur.com/6VBx3io.png'
+              }
+              alt='Current User'
+            />
           </UserImage>
         </UserContainer>
       </Container>
@@ -90,8 +97,9 @@ const Name = styled.div`
 const UserImage = styled.div`
   width: 28px;
   height: 28px;
-  border: 2px solid white;
+  border: 2px solid #161616;
   border-radius: 3px;
+  cursor: pointer;
 
   img {
     width: 100%;

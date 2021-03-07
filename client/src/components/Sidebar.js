@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 
 // Remove later when real database exists
 import { sidebarItemsData } from '../data/SidebarData';
@@ -9,6 +10,14 @@ import AddIcon from '@material-ui/icons/Add';
 import db from '../firebase';
 
 function Sidebar(props) {
+  const history = useHistory();
+
+  const goToChannel = (id) => {
+    if (id) {
+      history.push(`/chat/${id}`);
+    }
+  };
+
   const addChannel = () => {
     const promptName = prompt('Enter channel name');
 
@@ -23,7 +32,7 @@ function Sidebar(props) {
     <div>
       <Container>
         <WorkspaceContainer>
-          <Name>KyleF</Name>
+          <Name>{props.user.name}</Name>
           <NewMessage>
             <AddCircleOutlineIcon />
           </NewMessage>
@@ -45,7 +54,13 @@ function Sidebar(props) {
           </NewChannelContainer>
           <ChannelsList>
             {props.channels.map((channel) => {
-              return <Channel key={channel.id}># {channel.name}</Channel>;
+              return (
+                <Channel
+                  key={channel.id}
+                  onClick={() => goToChannel(channel.id)}>
+                  # {channel.name}
+                </Channel>
+              );
             })}
           </ChannelsList>
         </ChannelsContainer>

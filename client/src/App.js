@@ -8,10 +8,11 @@ import Chat from './components/Chat';
 import Login from './components/Login';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
-import db from './firebase';
+import db, { auth, provider } from './firebase';
 
 function App() {
   const [channels, setChannels] = useState([]);
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
 
   const getChannels = () => {
     db.collection('channels').onSnapshot((snapshot) => {
@@ -23,6 +24,16 @@ function App() {
     });
   };
 
+  const signOut = () => {
+    auth
+      .signOut()
+      .then((res) => {
+        setUser(null);
+        localStorage.removeItem('user');
+      })
+      .catch((err) => alert(err.message));
+  };
+
   useEffect(() => {
     getChannels();
   }, []);
@@ -30,20 +41,22 @@ function App() {
   return (
     <div>
       <Router>
-        <Container>
-          <Header />
-          <Main>
-            <Sidebar channels={channels} />
-            <Switch>
-              <Route path='/chat'>
-                <Chat />
-              </Route>
-              <Route path='/'>
-                <Login />
-              </Route>
-            </Switch>
-          </Main>
-        </Container>
+        {!user ? (
+          <Login setUser={setUser} />
+        ) : (
+          <Container>
+            <Header user={user} signOut={signOut} />
+            <Main>
+              <Sidebar user={user} channels={channels} />
+              <Switch>
+                <Route path='/chat/:channelId'>
+                  <Chat />
+                </Route>
+                <Route path='/'>Select or Create a Channel</Route>
+              </Switch>
+            </Main>
+          </Container>
+        )}
       </Router>
     </div>
   );
